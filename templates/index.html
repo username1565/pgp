@@ -7,7 +7,7 @@
     <!-- Set charset to UTF-8 -->
     <meta charset="utf-8">
 
-    <title>PGP Key Generator</title>
+    <title>SmartNinja PGP Key Generator</title>
 
     <meta name="description" content="A simple and easy to use client-side PGP key generator + encryptor/decryptor">
     <meta name="author" content="Matej Ramuta">
@@ -37,7 +37,7 @@
             <div class="col-md-12">
 
                 <div class="page-header">
-                    <h1 class="title">PGP Key Generator</h1>
+                    <h1 class="title">SmartNinja PGP Key Generator</h1>
                     A simple and easy to use client-side PGP key generator
                 </div>
 
@@ -230,7 +230,51 @@
 
                         <!-- Decrypt message -->
                         <div role="tabpanel" class="tab-pane" id="decrypt">
-                             <p>Decrypt a message</p>
+                              <div class="row generator">
+                                <div class="col-md-5">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Your Private Key</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" id="decryption-private-key"
+                                                      rows="7" placeholder="Paste your private key here."></textarea>
+                                            <br>
+
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span></div>
+                                                <input class="form-control" name="decryption-passphrase" placeholder="Passphrase for private key" type="password" id="decryption-passphrase" pattern=".{5,}" title="Enter your private key passphrase">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <div class="col-md-7">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Encrypted message</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" rows="7" id="decryption-encrypted-text"
+                                                      placeholder="Enter the encrypted message here."></textarea>
+                                        </div>
+                                    </div>
+
+                                     <button class="btn btn-warning" id="decryption-button">Decrypt the message</button>
+                                     <br>
+                                     <br>
+
+                                     <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Decrypted message</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" rows="7" id="decryption-decrypted-text"
+                                                      placeholder="Here you'll see the decrypted message." readonly></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
                         </div>
                         <!-- end Decrypt message -->
 
@@ -276,20 +320,6 @@
                                     <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
                                         <div class="panel-body">
                                             Elliptic Curve Cryptography (ECC) is an approach to public-key cryptography based on the algebraic structure of elliptic curves over finite fields. One of the main benefits in comparison with non-ECC cryptography (with plain Galois fields as a basis) is the same level of security provided by keys of smaller size. For example, a 256-bit ECC public key should provide comparable security to a 3072-bit RSA public key. ECC is still not widely supported in many PGP client applications so I advise that you generate ECC keys only if you know what you're doing. You can read more about it at <a href="http://tools.ietf.org/html/rfc6637">RFC 6637</a>.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingFour">
-                                        <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-          I'm concerned about my privacy. Do you keep or gather logs of any sort?
-        </a>
-      </h4>
-                                    </div>
-                                    <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
-                                        <div class="panel-body">
-                                            No, I don't keep or log any information you submitted through the generator form. The only logging that occurs when you visit this website is performed by Google Analytics, which helps me keep track of the number of people visiting the site monthly.
                                         </div>
                                     </div>
                                 </div>
