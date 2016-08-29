@@ -19,7 +19,7 @@
 
     <script type="text/javascript" src="/assets/js/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/assets/js/kbpgp-1.0.0-min.js"></script>
+    <script type="text/javascript" src="/assets/js/kbpgp.js"></script>
     <script type="text/javascript" src="/assets/js/FileSaver.js"></script>
     <script type="text/javascript" src="/assets/js/pgpkeygen.js"></script>
     <!--[if IE 9]>
@@ -46,6 +46,8 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#generator" aria-controls="generator" role="tab" data-toggle="tab">Generate a PGP key pair</a></li>
+                        <li role="presentation"><a href="#encrypt" aria-controls="encrypt" role="tab" data-toggle="tab">Encrypt</a></li>
+                        <li role="presentation"><a href="#decrypt" aria-controls="decrypt" role="tab" data-toggle="tab">Decrypt</a></li>
                         <li role="presentation"><a href="#faq" aria-controls="faq" role="tab" data-toggle="tab">FAQ</a></li>
                         <li role="presentation"><a href="#about" aria-controls="about" role="tab" data-toggle="tab">About</a></li>
                     </ul>
@@ -53,6 +55,7 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
 
+                        <!-- Key gen -->
                         <div role="tabpanel" class="tab-pane active" id="generator">
 
                             <div class="row generator">
@@ -179,7 +182,59 @@
                             </div>
 
                         </div>
-                        
+                        <!-- End Key gen -->
+
+                        <!-- Encrypt message -->
+                        <div role="tabpanel" class="tab-pane" id="encrypt">
+                             <div class="row generator">
+                                <div class="col-md-5">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Receiver's Public Key</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" id="encryption-receivers-public-key"
+                                                      rows="7" placeholder="Paste receiver's public key here."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <div class="col-md-7">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Your message</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" rows="7" id="encryption-plain-text"
+                                                      placeholder="Write your message here."></textarea>
+                                        </div>
+                                    </div>
+
+                                     <button class="btn btn-primary" id="encryption-button">Encrypt the message</button>
+                                     <br>
+                                     <br>
+
+                                     <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Encrypted message</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" rows="7" id="encryption-encrypted-text"
+                                                      placeholder="Here you'll see the encrypted message." readonly></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                        <!-- end Encrypt message -->
+
+                        <!-- Decrypt message -->
+                        <div role="tabpanel" class="tab-pane" id="decrypt">
+                             <p>Decrypt a message</p>
+                        </div>
+                        <!-- end Decrypt message -->
+
+                        <!-- FAQ -->
                         <div role="tabpanel" class="tab-pane" id="faq">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                 <div class="panel panel-default">
@@ -254,6 +309,10 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- end FAQ -->
+
+                        <!-- About -->
                         <div role="tabpanel" class="tab-pane" id="about">
                            <blockquote>Pretty Good Privacy (PGP) is a data encryption and decryption computer program that provides cryptographic privacy and authentication for data communication. PGP is often used for signing, encrypting, and decrypting texts, e-mails, files, directories, and whole disk partitions and to increase the security of e-mail communications. It was created by Phil Zimmermann in 1991. PGP and similar software follow the OpenPGP standard (RFC 4880) for encrypting and decrypting data. <em>Source: <a href="https://en.wikipedia.org/wiki/Pretty_Good_Privacy" target="_blank">Wikipedia</a></em></blockquote>
 
@@ -261,6 +320,7 @@
 
                             <p>This site is Open Source and the source code are available on <a href="https://github.com/heiswayi/pgp">GitHub</a>. If you have any inquiry or problem, you may <a href="https://github.com/heiswayi/pgp/issues">create an issue here</a>.</p>
                         </div>
+                        <!-- end About -->
                     </div>
 
                 </div>
