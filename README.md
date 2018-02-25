@@ -2,7 +2,8 @@
 
 A simple and easy to use PGP system
 
-**URL:** https://smartninja-pgp.appspot.com
+**My Version:** https://thechiefmeat.github.io/pgp/
+**URL (forked version):** https://smartninja-pgp.appspot.com
 
 ## About this program
 
@@ -21,10 +22,7 @@ PGP ([kbpgp](https://github.com/keybase/kbpgp)). For file saving capabilities I 
 utilizing [Eli Grey's](https://github.com/eligrey) wonderful [FileSaver.js](https://github.com/eligrey/FileSaver.js/) 
 interface.
 
-If you have any inquiry, just [create an issue here](https://github.com/ramuta/pgp/issues/new).
-
-> This project is a fork of [PGP key generator by Heiswayi](https://github.com/heiswayi/pgp/). I added ability to 
-encrypt/decrypt messages.
+> This project is a fork of [PGP key generator by Heiswayi](https://github.com/heiswayi/pgp/).
 
 ## Frequently Asked Questions
 
