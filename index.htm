@@ -46,6 +46,7 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#generator" aria-controls="generator" role="tab" data-toggle="tab">Generate a PGP key pair</a></li>
+                        <li role="presentation"><a href="#sign" aria-controls="sign" role="tab" data-toggle="tab">Sign</a></li>
                         <li role="presentation"><a href="#encrypt" aria-controls="encrypt" role="tab" data-toggle="tab">Encrypt</a></li>
                         <li role="presentation"><a href="#decrypt" aria-controls="decrypt" role="tab" data-toggle="tab">Decrypt</a></li>
                         <li role="presentation"><a href="#faq" aria-controls="faq" role="tab" data-toggle="tab">FAQ</a></li>
@@ -184,6 +185,54 @@
                         </div>
                         <!-- End Key gen -->
 
+                        <!-- Sign message -->
+                        <div role="tabpanel" class="tab-pane" id="sign">
+                             <div class="row generator">
+                                <div class="col-md-5">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Your Private Key</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" id="sign-private-key" rows="7" placeholder="Paste your private key here."></textarea>
+                                            <br>
+
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span></div>
+                                                <input class="form-control" name="sign-passphrase" placeholder="Passphrase for private key" id="sign-passphrase" pattern=".{5,}" title="Enter your private key passphrase" type="password">
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <div class="col-md-7">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Your message</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" rows="7" id="sign-plain-text" placeholder="Write your message here."></textarea>
+                                        </div>
+                                    </div>
+
+                                     <button class="btn btn-primary" id="sign-button">Sign the message</button>
+                                     <br>
+                                     <br>
+
+                                     <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Signed message</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" rows="7" id="signed-text" placeholder="Here you'll see the signed message." readonly="readonly"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                        <!-- end Sign message -->
+
                         <!-- Encrypt message -->
                         <div role="tabpanel" class="tab-pane" id="encrypt">
                              <div class="row generator">
@@ -285,11 +334,11 @@
                                     </div>
                                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                         <div class="panel-body">
-                                            Yes, it is as safe as 
-generating your keys using a local application. The key generation on 
-this website is done client-side only. This means the key pairs are 
-generated entirely in your web browser and they never leave your 
-computer. This website never sees any key related data or the key 
+                                            Yes, it is as safe as
+generating your keys using a local application. The key generation on
+this website is done client-side only. This means the key pairs are
+generated entirely in your web browser and they never leave your
+computer. This website never sees any key related data or the key
 itself.
                                         </div>
                                     </div>
@@ -304,15 +353,15 @@ itself.
                                     </div>
                                     <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
                                         <div class="panel-body">
-                                            Sure. For starters, it 
-enforces using a passphrase with each key generated. This ensures some 
-level of protection if your key is ever stolen. It also automatically 
-generates two subkeys for you, one for signing and the other for 
-encryption. You can use your subkeys to sign and encrypt data and keep 
-your private key safe. The bit length of generated subkeys will be 
-identical to the length you specified for the primary key. The primary 
-key it generates for you never expires. You can, however, set the 
-expiration date on the generated subkeys using the 'Expire' option in 
+                                            Sure. For starters, it
+enforces using a passphrase with each key generated. This ensures some
+level of protection if your key is ever stolen. It also automatically
+generates two subkeys for you, one for signing and the other for
+encryption. You can use your subkeys to sign and encrypt data and keep
+your private key safe. The bit length of generated subkeys will be
+identical to the length you specified for the primary key. The primary
+key it generates for you never expires. You can, however, set the
+expiration date on the generated subkeys using the 'Expire' option in
 the key generation form.
                                         </div>
                                     </div>
@@ -327,15 +376,15 @@ the key generation form.
                                     </div>
                                     <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
                                         <div class="panel-body">
-                                            Elliptic Curve Cryptography 
-(ECC) is an approach to public-key cryptography based on the algebraic 
-structure of elliptic curves over finite fields. One of the main 
-benefits in comparison with non-ECC cryptography (with plain Galois 
-fields as a basis) is the same level of security provided by keys of 
-smaller size. For example, a 256-bit ECC public key should provide 
-comparable security to a 3072-bit RSA public key. ECC is still not 
-widely supported in many PGP client applications so I advise that you 
-generate ECC keys only if you know what you're doing. You can read more 
+                                            Elliptic Curve Cryptography
+(ECC) is an approach to public-key cryptography based on the algebraic
+structure of elliptic curves over finite fields. One of the main
+benefits in comparison with non-ECC cryptography (with plain Galois
+fields as a basis) is the same level of security provided by keys of
+smaller size. For example, a 256-bit ECC public key should provide
+comparable security to a 3072-bit RSA public key. ECC is still not
+widely supported in many PGP client applications so I advise that you
+generate ECC keys only if you know what you're doing. You can read more
 about it at <a href="http://tools.ietf.org/html/rfc6637">RFC 6637</a>.
                                         </div>
                                     </div>
@@ -350,10 +399,10 @@ about it at <a href="http://tools.ietf.org/html/rfc6637">RFC 6637</a>.
                                     </div>
                                     <div id="collapseFive" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFive">
                                         <div class="panel-body">
-                                            PGP key generation is a 
-resource intensive process. As a result, your may experience increased 
-CPU and memory usage on your device, which can result in performance 
-issues. The performance impact depends on the hardware capabilities of 
+                                            PGP key generation is a
+resource intensive process. As a result, your may experience increased
+CPU and memory usage on your device, which can result in performance
+issues. The performance impact depends on the hardware capabilities of
 your device.
                                         </div>
                                     </div>
