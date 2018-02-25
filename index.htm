@@ -5,7 +5,7 @@
     <!-- Set charset to UTF-8 -->
     <meta charset="utf-8">
 
-    <title>SmartNinja Online PGP</title>
+    <title>PGP Key Generator</title>
 
     <meta name="description" content="A simple and easy to use client-side PGP system.">
     <meta name="author" content="Matej Ramuta">
@@ -37,7 +37,7 @@
             <div class="col-md-12">
 
                 <div class="page-header">
-                    <h1 class="title">SmartNinja Online PGP</h1>
+                    <h1 class="title">PGP Key Generator</h1>
                     A simple and easy to use client-side PGP system
                 </div>
 
@@ -47,6 +47,7 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#generator" aria-controls="generator" role="tab" data-toggle="tab">Generate a PGP key pair</a></li>
                         <li role="presentation"><a href="#sign" aria-controls="sign" role="tab" data-toggle="tab">Sign</a></li>
+                        <li role="presentation"><a href="#verify" aria-controls="verify" role="tab" data-toggle="tab">Verify</a></li>
                         <li role="presentation"><a href="#encrypt" aria-controls="encrypt" role="tab" data-toggle="tab">Encrypt</a></li>
                         <li role="presentation"><a href="#decrypt" aria-controls="decrypt" role="tab" data-toggle="tab">Decrypt</a></li>
                         <li role="presentation"><a href="#faq" aria-controls="faq" role="tab" data-toggle="tab">FAQ</a></li>
@@ -201,7 +202,7 @@
                                                 <div class="input-group-addon"><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span></div>
                                                 <input class="form-control" name="sign-passphrase" placeholder="Passphrase for private key" id="sign-passphrase" pattern=".{5,}" title="Enter your private key passphrase" type="password">
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -438,7 +439,7 @@ your device.
 
                             <p>
                                 This project is a fork of Heiswayi Nrird's PGP Key Generator. Matej Ramuta forked it
-                                and added message encryption and decryption. TheChiefMeat added support sign-only mode and support for 8192 RSA keys.
+                                and added message encryption and decryption. TheChiefMeat added support for 8192 RSA keys.
                             </p>
 
                             <p>
