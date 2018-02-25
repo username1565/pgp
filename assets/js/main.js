@@ -21,6 +21,44 @@ $(document).ready(function() {
 
     $('[data-toggle="popover"]').popover({placement: 'top'});
 
+    // SIGN
+    var signButton = $("#sign-button");
+
+    signButton.click(function(){
+        var signPlainText = $("#sign-plain-text");
+        var SignedText = $("#signed-text");
+        var signPrivateKey = $("#sign-private-key");
+        var signPassphrase = $("#sign-passphrase");
+
+        var currUser = kbpgp.KeyManager.import_from_armored_pgp({
+          armored: signPrivateKey.val()
+        }, function(err, currUser) {
+          if (!err) {
+            if (currUser.is_pgp_locked()) {
+              currUser.unlock_pgp({
+                passphrase: signPassphrase.val()
+              }, function(err) {
+                if (!err) {
+                  console.log("Loaded private key with passphrase");
+
+                  var params = {
+                    msg: signPlainText.val(),
+                    sign_with: currUser
+                  };
+
+                  kbpgp.box(params, function(err, result_string, result_buffer) {
+                    console.log(err, result_string, result_buffer);
+                    SignedText.val(result_string);
+                  });
+                }
+              });
+            } else {
+              console.log("Loaded private key w/o passphrase");
+            }
+          }
+        });
+  });
+
     /* New code by Matej Ramuta */
 
     // ENCRYPTION
