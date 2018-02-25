@@ -1,4 +1,4 @@
-# SmartNinja Online PGP
+# PGP Key Generator
 
 A simple and easy to use PGP system
 
