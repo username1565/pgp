@@ -180,7 +180,7 @@ var populateKeysizeDropdown = function() {
 		{"value": "", "class":"disabled", "text":"Key Size", "selected":"selected"},
 		{"value": "1024", "class":null, "text":"1024 bits (good for testing purposes)", "selected":null},
 		{"value": "2048", "class":null, "text":"2048 bits (secure)", "selected":null},
-		{"value": "4096", "class":null, "text":"4096 bits (more secure)", "selected":null},
+		{"value": "4096", "class":null, "text":"4096 bits (more secure (Recommended))", "selected":null},
 		{"value": "8192", "class":null, "text":"8192 bits (super secure, super slow)", "selected":null},
 	]
 
