@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html>
-
-<head>
+<html><head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <!-- Set charset to UTF-8 -->
@@ -14,21 +12,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="/assets/css/custom.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="index_files/bootstrap.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="index_files/custom.css" media="screen">
 
-    <script type="text/javascript" src="/assets/js/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/assets/js/kbpgp.js"></script>
-    <script type="text/javascript" src="/assets/js/FileSaver.js"></script>
-    <script type="text/javascript" src="/assets/js/pgpkeygen.js"></script>
+    <script type="text/javascript" src="index_files/jquery-1.js"></script>
+    <script type="text/javascript" src="index_files/bootstrap.js"></script>
+    <script type="text/javascript" src="index_files/kbpgp.js"></script>
+    <script type="text/javascript" src="index_files/FileSaver.js"></script>
+    <script type="text/javascript" src="index_files/pgpkeygen.js"></script>
     <!--[if IE 9]>
 		<script type="text/javascript" src="/assets/js/placeholder.js"></script>
 	<![endif]-->
 
     <!-- Main script -->
-    <script type="text/javascript" src="/assets/js/main.js"></script>
-</head>
+    <script type="text/javascript" src="index_files/main.js"></script>
+<style>.cip-genpw-icon.cip-icon-key-small {background-image: url(moz-extension://fd870d6a-eaa4-44fc-9c78-14067cbe5f06/icons/key_16x16.png); }
+.cip-genpw-icon.cip-icon-key-big {background-image: url(moz-extension://fd870d6a-eaa4-44fc-9c78-14067cbe5f06/icons/key_24x24.png); }
+</style></head>
 
 <body>
 
@@ -46,6 +46,7 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#generator" aria-controls="generator" role="tab" data-toggle="tab">Generate a PGP key pair</a></li>
+                        <li role="presentation"><a href="#sign" aria-controls="sign" role="tab" data-toggle="tab">Sign</a></li>
                         <li role="presentation"><a href="#encrypt" aria-controls="encrypt" role="tab" data-toggle="tab">Encrypt</a></li>
                         <li role="presentation"><a href="#decrypt" aria-controls="decrypt" role="tab" data-toggle="tab">Decrypt</a></li>
                         <li role="presentation"><a href="#faq" aria-controls="faq" role="tab" data-toggle="tab">FAQ</a></li>
@@ -71,7 +72,7 @@
                                                     <label class="sr-only" for="name">Your Name</label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-                                                        <input class="form-control" name="name" placeholder="Your Name" type="text" id="name" title="Enter your name" required>
+                                                        <input class="form-control" name="name" placeholder="Your Name" id="name" title="" required="" data-original-title="Enter your name" data-cip-id="name" type="text">
                                                         <div class="input-group-addon">Required</div>
                                                     </div>
                                                 </div>
@@ -80,17 +81,17 @@
                                                     <label class="sr-only" for="email">Email</label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div>
-                                                        <input class="form-control" name="email" placeholder="your@domain.com" type="email" id="email" title="Enter a valid email address" required>
+                                                        <input class="form-control" name="email" placeholder="your@domain.com" id="email" title="" required="" data-original-title="Enter a valid email address" data-cip-id="email" type="email">
                                                         <div class="input-group-addon">Required</div>
                                                     </div>
-                                                    <span id="helpBlock" class="help-block"><a href="#" data-toggle="popover" title="Email address" data-content="Your email address will be included as public information in your public PGP key, so your public key can be easily imported by third-party PGP software. If you do not supply your email address, your PGP decryption software may be unable to link your email address to your public PGP key, and therefore unable to automatically encrypt/decrypt email messages. As a result, you will have to manually decrypt messages each time you receive a PGP-encrypted message.">Email address: Why it is required?</a></span>
+                                                    <span id="helpBlock" class="help-block"><a href="#" data-toggle="popover" title="" data-content="Your email address will be included as public information in your public PGP key, so your public key can be easily imported by third-party PGP software. If you do not supply your email address, your PGP decryption software may be unable to link your email address to your public PGP key, and therefore unable to automatically encrypt/decrypt email messages. As a result, you will have to manually decrypt messages each time you receive a PGP-encrypted message." data-original-title="Email address">Email address: Why it is required?</a></span>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label class="sr-only" for="comments">Optional Comment</label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></div>
-                                                        <input class="form-control" name="comments" placeholder="Optional comments" type="text" id="comments" title="Enter any optional comment">
+                                                        <input class="form-control" name="comments" placeholder="Optional comments" id="comments" title="" data-original-title="Enter any optional comment" data-cip-id="comments" type="text">
                                                     </div>
                                                 </div>
 
@@ -98,7 +99,7 @@
                                                     <label class="sr-only" for="algorithm">Algorithm</label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></div>
-                                                        <select class="form-control" name="algorithm" id="algorithm" title="Choose an encryption algorithm" required>
+                                                        <select class="form-control" name="algorithm" id="algorithm" title="" required="" data-original-title="Choose an encryption algorithm" data-cip-id="cIPJQ342845639">
                                                             <option value="" disabled="disabled" selected="selected" class="disabled">Algorithm</option>
                                                             <option value="rsa">RSA (Recommended)</option>
                                                             <option value="ecc">ECC (Elliptic Curve Cryptography)</option>
@@ -111,7 +112,7 @@
                                                     <label class="sr-only" for="bitlength">Bit Length</label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span></div>
-                                                        <select class="form-control" name="bitlength" id="bitlength" title="Select a key size" required disabled>
+                                                        <select class="form-control" name="bitlength" id="bitlength" title="" required="" disabled="disabled" data-original-title="Select a key size" data-cip-id="cIPJQ342845640">
                                                             <option value="" class="disabled" selected="selected">Key size</option>
                                                         </select>
                                                         <div class="input-group-addon">Required</div>
@@ -122,7 +123,7 @@
                                                     <label class="sr-only" for="expire">Expires</label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span></div>
-                                                        <select name="expire" id="expire" class="form-control" title="Expiration of your subkeys" required>
+                                                        <select name="expire" id="expire" class="form-control" title="" required="" data-original-title="Expiration of your subkeys" data-cip-id="cIPJQ342845641">
                                                             <option value="" disabled="disabled" selected="selected" class="disabled">Expires</option>
                                                             <option value="0">Never</option>
                                                             <option value="1">1 year</option>
@@ -138,14 +139,14 @@
                                                     <label class="sr-only" for="passphrase">Passphrase</label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon"><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span></div>
-                                                        <input class="form-control" name="passphrase" placeholder="Passphrase" type="password" id="passphrase" pattern=".{5,}" title="Enter a passphrase; at least 5 characters" required>
+                                                        <input class="form-control" name="passphrase" placeholder="Passphrase" id="passphrase" pattern=".{5,}" title="" required="" data-original-title="Enter a passphrase; at least 5 characters" data-cip-id="passphrase" type="password">
                                                         <div class="input-group-addon">Required</div>
                                                     </div>
-                                                    <span id="helpBlock" class="help-block"><a href="#" data-toggle="popover" title="Passphrase" data-content="Passphrase is a like a password to protect your private PGP key. This password offers an extra layer of protection in case someone manage to steal your public PGP key. Please pick a password you will remember, because if you forget this password, there is no way to recover your password and no way for you to decrypt PGP messages sent to you!">Passphrase: What is this?</a></span>
+                                                    <span id="helpBlock" class="help-block"><a href="#" data-toggle="popover" title="" data-content="Passphrase is a like a password to protect your private PGP key. This password offers an extra layer of protection in case someone manage to steal your public PGP key. Please pick a password you will remember, because if you forget this password, there is no way to recover your password and no way for you to decrypt PGP messages sent to you!" data-original-title="Passphrase">Passphrase: What is this?</a></span>
                                                 </div>
 
-                                                <input type="submit" value="Generate keys" id="generate_keys_btn" class="btn btn-primary btn-lg btn-block send" name="send" />
-                                                <a href="/" id="start_again_btn" class="btn btn-link btn-block hide">Click here to regenerate another pair of key</a>
+                                                <input value="Generate keys" id="generate_keys_btn" class="btn btn-primary btn-lg btn-block send" name="send" type="submit">
+                                                <a href="https://smartninja-pgp.appspot.com/" id="start_again_btn" class="btn btn-link btn-block hide">Click here to regenerate another pair of key</a>
                                             </form>
                                         </div>
                                     </div>
@@ -153,16 +154,16 @@
                                 </div>
                                 <div class="col-md-7">
 
-                                    <input type="hidden" name="key_short_id" id="key_short_id" value="" />
-                                    <input type="hidden" name="btn_update_ts" id="btn_update_ts" value=0 />
+                                    <input name="key_short_id" id="key_short_id" value="" type="hidden">
+                                    <input name="btn_update_ts" id="btn_update_ts" value="0" type="hidden">
 
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <h3 class="panel-title">Public Key</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" rows="7" name="pubkey" placeholder="Your public key will be generated here." id="pubkey" readonly></textarea>
-                                            <span id="helpBlock" class="help-block"><a href="#" class="btn btn-danger download disabled" title="This button will be enabled after you generate your key pair." name="download_pub_key" id="download_pub_key"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Download public key (.ASC file)</a> <a href="#" class="btn btn-link" data-toggle="popover" title="Public key" data-content="You can put this key on your website or at the bottom signature of your email messages. Anyone wishing to contact you in private will have your public PGP key to send you encrypted messages.">Learn More</a>
+                                            <textarea class="form-control message" rows="7" name="pubkey" placeholder="Your public key will be generated here." id="pubkey" readonly="readonly"></textarea>
+                                            <span id="helpBlock" class="help-block"><a href="#" class="btn btn-danger download disabled" title="This button will be enabled after you generate your key pair." name="download_pub_key" id="download_pub_key"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Download public key (.ASC file)</a> <a href="#" class="btn btn-link" data-toggle="popover" title="" data-content="You can put this key on your website or at the bottom signature of your email messages. Anyone wishing to contact you in private will have your public PGP key to send you encrypted messages." data-original-title="Public key">Learn More</a>
                                             </span>
                                         </div>
                                     </div>
@@ -172,8 +173,8 @@
                                             <h3 class="panel-title">Private Key</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" rows="7" name="privkey" placeholder="Your private key will be generated here." id="privkey" readonly></textarea>
-                                            <span id="helpBlock" class="help-block"><a href="#" class="btn btn-danger download disabled" title="This button will be enabled after you generate your key pair." name="download_priv_key" id="download_priv_key"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Download private key (.ASC file)</a> <a href="#" class="btn btn-link" data-toggle="popover" title="Private key" data-content="Save your private PGP key in a file on your computer and keep it as confidential as possible. You will need it to decrypt PGP messages sent to you using your public PGP key.">Learn More</a>
+                                            <textarea class="form-control message" rows="7" name="privkey" placeholder="Your private key will be generated here." id="privkey" readonly="readonly"></textarea>
+                                            <span id="helpBlock" class="help-block"><a href="#" class="btn btn-danger download disabled" title="This button will be enabled after you generate your key pair." name="download_priv_key" id="download_priv_key"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Download private key (.ASC file)</a> <a href="#" class="btn btn-link" data-toggle="popover" title="" data-content="Save your private PGP key in a file on your computer and keep it as confidential as possible. You will need it to decrypt PGP messages sent to you using your public PGP key." data-original-title="Private key">Learn More</a>
                                             </span>
                                         </div>
                                     </div>
@@ -184,17 +185,23 @@
                         </div>
                         <!-- End Key gen -->
 
-                        <!-- Encrypt message -->
-                        <div role="tabpanel" class="tab-pane" id="encrypt">
+                        <!-- Sign message -->
+                        <div role="tabpanel" class="tab-pane" id="sign">
                              <div class="row generator">
                                 <div class="col-md-5">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h3 class="panel-title">Receiver's Public Key</h3>
+                                            <h3 class="panel-title">Your Private Key</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" id="encryption-receivers-public-key"
-                                                      rows="7" placeholder="Paste receiver's public key here."></textarea>
+                                            <textarea class="form-control message" id="sign-private-key" rows="7" placeholder="Paste your private key here."></textarea>
+                                            <br>
+
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span></div>
+                                                <input class="form-control" name="sign-passphrase" placeholder="Passphrase for private key" id="sign-passphrase" pattern=".{5,}" title="Enter your private key passphrase" type="password">
+                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -205,8 +212,48 @@
                                             <h3 class="panel-title">Your message</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" rows="7" id="encryption-plain-text"
-                                                      placeholder="Write your message here."></textarea>
+                                            <textarea class="form-control message" rows="7" id="sign-plain-text" placeholder="Write your message here."></textarea>
+                                        </div>
+                                    </div>
+
+                                     <button class="btn btn-primary" id="sign-button">Sign the message</button>
+                                     <br>
+                                     <br>
+
+                                     <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Signed message</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" rows="7" id="signed-text" placeholder="Here you'll see the signed message." readonly="readonly"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                        <!-- end Sign message -->
+
+                        <!-- Encrypt message -->
+                        <div role="tabpanel" class="tab-pane" id="encrypt">
+                             <div class="row generator">
+                                <div class="col-md-5">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Receiver's Public Key</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" id="encryption-receivers-public-key" rows="7" placeholder="Paste receiver's public key here."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <div class="col-md-7">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Your message</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" rows="7" id="encryption-plain-text" placeholder="Write your message here."></textarea>
                                         </div>
                                     </div>
 
@@ -219,8 +266,7 @@
                                             <h3 class="panel-title">Encrypted message</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" rows="7" id="encryption-encrypted-text"
-                                                      placeholder="Here you'll see the encrypted message." readonly></textarea>
+                                            <textarea class="form-control message" rows="7" id="encryption-encrypted-text" placeholder="Here you'll see the encrypted message." readonly="readonly"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -237,13 +283,12 @@
                                             <h3 class="panel-title">Your Private Key</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" id="decryption-private-key"
-                                                      rows="7" placeholder="Paste your private key here."></textarea>
+                                            <textarea class="form-control message" id="decryption-private-key" rows="7" placeholder="Paste your private key here."></textarea>
                                             <br>
 
                                             <div class="input-group">
                                                 <div class="input-group-addon"><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span></div>
-                                                <input class="form-control" name="decryption-passphrase" placeholder="Passphrase for private key" type="password" id="decryption-passphrase" pattern=".{5,}" title="Enter your private key passphrase">
+                                                <input class="form-control" name="decryption-passphrase" placeholder="Passphrase for private key" id="decryption-passphrase" pattern=".{5,}" title="Enter your private key passphrase" type="password">
                                             </div>
                                         </div>
                                     </div>
@@ -255,8 +300,7 @@
                                             <h3 class="panel-title">Encrypted message</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" rows="7" id="decryption-encrypted-text"
-                                                      placeholder="Enter the encrypted message here."></textarea>
+                                            <textarea class="form-control message" rows="7" id="decryption-encrypted-text" placeholder="Enter the encrypted message here."></textarea>
                                         </div>
                                     </div>
 
@@ -269,8 +313,7 @@
                                             <h3 class="panel-title">Decrypted message</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" rows="7" id="decryption-decrypted-text"
-                                                      placeholder="Here you'll see the decrypted message." readonly></textarea>
+                                            <textarea class="form-control message" rows="7" id="decryption-decrypted-text" placeholder="Here you'll see the decrypted message." readonly="readonly"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -291,7 +334,12 @@
                                     </div>
                                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                         <div class="panel-body">
-                                            Yes, it is as safe as generating your keys using a local application. The key generation on this website is done client-side only. This means the key pairs are generated entirely in your web browser and they never leave your computer. This website never sees any key related data or the key itself.
+                                            Yes, it is as safe as
+generating your keys using a local application. The key generation on
+this website is done client-side only. This means the key pairs are
+generated entirely in your web browser and they never leave your
+computer. This website never sees any key related data or the key
+itself.
                                         </div>
                                     </div>
                                 </div>
@@ -305,7 +353,16 @@
                                     </div>
                                     <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
                                         <div class="panel-body">
-                                            Sure. For starters, it enforces using a passphrase with each key generated. This ensures some level of protection if your key is ever stolen. It also automatically generates two subkeys for you, one for signing and the other for encryption. You can use your subkeys to sign and encrypt data and keep your private key safe. The bit length of generated subkeys will be identical to the length you specified for the primary key. The primary key it generates for you never expires. You can, however, set the expiration date on the generated subkeys using the 'Expire' option in the key generation form.
+                                            Sure. For starters, it
+enforces using a passphrase with each key generated. This ensures some
+level of protection if your key is ever stolen. It also automatically
+generates two subkeys for you, one for signing and the other for
+encryption. You can use your subkeys to sign and encrypt data and keep
+your private key safe. The bit length of generated subkeys will be
+identical to the length you specified for the primary key. The primary
+key it generates for you never expires. You can, however, set the
+expiration date on the generated subkeys using the 'Expire' option in
+the key generation form.
                                         </div>
                                     </div>
                                 </div>
@@ -319,7 +376,16 @@
                                     </div>
                                     <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
                                         <div class="panel-body">
-                                            Elliptic Curve Cryptography (ECC) is an approach to public-key cryptography based on the algebraic structure of elliptic curves over finite fields. One of the main benefits in comparison with non-ECC cryptography (with plain Galois fields as a basis) is the same level of security provided by keys of smaller size. For example, a 256-bit ECC public key should provide comparable security to a 3072-bit RSA public key. ECC is still not widely supported in many PGP client applications so I advise that you generate ECC keys only if you know what you're doing. You can read more about it at <a href="http://tools.ietf.org/html/rfc6637">RFC 6637</a>.
+                                            Elliptic Curve Cryptography
+(ECC) is an approach to public-key cryptography based on the algebraic
+structure of elliptic curves over finite fields. One of the main
+benefits in comparison with non-ECC cryptography (with plain Galois
+fields as a basis) is the same level of security provided by keys of
+smaller size. For example, a 256-bit ECC public key should provide
+comparable security to a 3072-bit RSA public key. ECC is still not
+widely supported in many PGP client applications so I advise that you
+generate ECC keys only if you know what you're doing. You can read more
+about it at <a href="http://tools.ietf.org/html/rfc6637">RFC 6637</a>.
                                         </div>
                                     </div>
                                 </div>
@@ -333,7 +399,11 @@
                                     </div>
                                     <div id="collapseFive" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFive">
                                         <div class="panel-body">
-                                            PGP key generation is a resource intensive process. As a result, your may experience increased CPU and memory usage on your device, which can result in performance issues. The performance impact depends on the hardware capabilities of your device.
+                                            PGP key generation is a
+resource intensive process. As a result, your may experience increased
+CPU and memory usage on your device, which can result in performance
+issues. The performance impact depends on the hardware capabilities of
+your device.
                                         </div>
                                     </div>
                                 </div>
@@ -368,7 +438,7 @@
 
                             <p>
                                 This project is a fork of Heiswayi Nrird's PGP Key Generator. Matej Ramuta forked it
-                                and added message encryption and decryption. TheChiefmeat added support for 8192 RSA keys.
+                                and added message encryption and decryption. TheChiefMeat added support for 8192 RSA keys.
                             </p>
 
                             <p>
@@ -397,6 +467,6 @@
         </div>
     </div>
 
-</body>
 
-</html>
+
+<div class="kphc cip-genpw-icon cip-icon-key-big" style="z-index: 3; top: 579.2px; left: 672.317px;"></div><div id="kphc-pw-dialog" class="kphc"><div style="display: none;" tabindex="-1" role="dialog" class="ui-dialog ui-corner-all ui-widget ui-widget-content ui-front ui-draggable" aria-describedby="cip-genpw-dialog" aria-labelledby="ui-id-1"><div class="ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix ui-draggable-handle"><span id="ui-id-1" class="ui-dialog-title">Password Generator</span><button type="button" class="ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close" title="×"><span class="ui-button-icon ui-icon ui-icon-closethick"></span><span class="ui-button-icon-space"> </span>×</button></div><div id="cip-genpw-dialog" class="ui-dialog-content ui-widget-content"><div class="cip-genpw-clearfix"><button id="cip-genpw-btn-generate" class="b2c-btn b2c-btn-primary b2c-btn-small" style="float: left;">Generate</button><button id="cip-genpw-btn-clipboard" class="b2c-btn b2c-btn-small" style="float: right;">Copy to clipboard</button></div><div class="b2c-input-append cip-genpw-password-frame"><input id="cip-genpw-textfield-password" class="cip-genpw-textfield" type="text"><span class="b2c-add-on" id="cip-genpw-quality">123 Bits</span></div><label class="cip-genpw-label"><input id="cip-genpw-checkbox-next-field" class="cip-genpw-checkbox" type="checkbox"> also fill in the next password-field</label><button id="cip-genpw-btn-fillin" class="b2c-btn b2c-btn-small">Fill in &amp; copy to clipboard</button></div></div></div></body></html>
