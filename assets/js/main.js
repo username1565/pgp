@@ -59,6 +59,55 @@ $(document).ready(function() {
         });
   });
 
+  // SIGN+Encrypt
+  var signencryptButton = $("#signencrypt-button");
+
+  signencryptButton.click(function() {
+      var signencryptPlainText = $("#signencrypt-plain-text");
+      var signencryptText = $("#signencrypt-text");
+      var signencryptPrivateKey = $("#signencrypt-private-key");
+      var signencryptPassphrase = $("#signencrypt-passphrase");
+      var signencryptReceiversPublicKey = $("#signencrypt-receivers-public-key");
+
+      var currUser = kbpgp.KeyManager.import_from_armored_pgp({
+          armored: signencryptPrivateKey.val()
+      }, function(err, currUser) {
+          if (!err) {
+              if (currUser.is_pgp_locked()) {
+                  currUser.unlock_pgp({
+                      passphrase: signencryptPassphrase.val()
+                  }, function(err) {
+                      if (!err) {
+                          console.log("Loaded private key with passphrase");
+                      }
+                  });
+              }
+          }
+          // import receiver's public key
+          var receiver = kbpgp.KeyManager.import_from_armored_pgp({
+              armored: signencryptReceiversPublicKey.val()
+          }, function(err, receiver) {
+              if (!err) {
+                  console.log("receiver's public key is loaded");
+                  console.log(receiver);
+
+                  var params = {
+                      msg: signencryptPlainText.val(),
+                      sign_with: currUser,
+                      encrypt_for: receiver
+                  };
+
+                  kbpgp.box(params, function(err, result_string, result_buffer) {
+                      console.log(err, result_string, result_buffer);
+                      signencryptText.val(result_string);
+                  });
+              } else {
+                  console.log("Error!");
+              }
+          });
+      });
+  });
+
     /* New code by Matej Ramuta */
 
     // ENCRYPTION
