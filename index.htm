@@ -4,8 +4,10 @@
 
     <!-- Set charset to UTF-8 -->
     <meta charset="utf-8">
-
+	
+	<div class="title">
     <title>PGP Key Generator</title>
+	</div>
 
     <meta name="description" content="A simple and easy to use client-side PGP system.">
     <meta name="author" content="Matej Ramuta">
@@ -373,6 +375,11 @@
                                         </div>
                                         <div class="panel-body">
                                             <textarea class="form-control message" rows="7" id="decryption-decrypted-text" placeholder="Here you'll see the decrypted message." readonly="readonly"></textarea>
+                                        </div>
+
+										<div class="input-group">
+                                            <div class="input-group-addon"><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span></div>
+                                            <input class="form-control" name="sign-passphrase" placeholder="PGP Fingerprint" id="pgp-fingerprint" pattern=".{5,}" title="Enter your private key passphrase" readonly="readonly">
                                         </div>
                                     </div>
                                 </div>
