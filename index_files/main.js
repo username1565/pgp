@@ -176,6 +176,7 @@ $(document).ready(function() {
                       return console.log("Problem: " + err);
                     } else {
                       var decryptedText = literals[0].toString();
+					  						document.getElementById("Fingerprint").reset();
                       console.log("decrypted message: " + decryptedText);
 
                       decryptionDecryptedText.val(decryptedText);
@@ -186,7 +187,6 @@ $(document).ready(function() {
                       if (km) {
                         console.log("Signed by PGP fingerprint");
                         console.log(km.get_pgp_fingerprint().toString('hex'));
-						
 						var PGP = "PGP Fingerprint: "
 						var Fingerprint = km.get_pgp_fingerprint().toString('hex');
 						pgpFingerprint.val(PGP.concat(Fingerprint));
