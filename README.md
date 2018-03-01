@@ -23,8 +23,8 @@ interface.
 
 If you have any inquiry, just [create an issue here](https://github.com/ramuta/pgp/issues/new).
 
-> This project is a fork of [PGP key generator by Heiswayi](https://github.com/heiswayi/pgp/). I added ability to 
-encrypt/decrypt messages.
+> This project is a fork of [PGP key generator by Heiswayi](https://github.com/heiswayi/pgp/). Ramuta added ability to 
+encrypt/decrypt messages. I added sign only mode, sign+encrypt mode as well as support for 8192 RSA keys.
 
 ## Frequently Asked Questions
 
