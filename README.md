@@ -21,8 +21,6 @@ PGP ([kbpgp](https://github.com/keybase/kbpgp)). For file saving capabilities I 
 utilizing [Eli Grey's](https://github.com/eligrey) wonderful [FileSaver.js](https://github.com/eligrey/FileSaver.js/) 
 interface.
 
-If you have any inquiry, just [create an issue here](https://github.com/ramuta/pgp/issues/new).
-
 > This project is a fork of [PGP key generator by Heiswayi](https://github.com/heiswayi/pgp/). Ramuta added ability to 
 encrypt/decrypt messages. I added sign only mode, sign+encrypt mode as well as support for 8192 RSA keys.
 
