@@ -151,6 +151,7 @@ $(document).ready(function() {
         var decryptionDecryptedText = $("#decryption-decrypted-text");
         var decryptionPrivateKey = $("#decryption-private-key");
         var decryptionPassphrase = $("#decryption-passphrase");
+		var pgpFingerprint = $("#pgp-fingerprint");
 
         console.log(decryptionEncryptedText);
 
@@ -185,6 +186,10 @@ $(document).ready(function() {
                       if (km) {
                         console.log("Signed by PGP fingerprint");
                         console.log(km.get_pgp_fingerprint().toString('hex'));
+						
+						var PGP = "PGP Fingerprint: "
+						var Fingerprint = km.get_pgp_fingerprint().toString('hex');
+						pgpFingerprint.val(PGP.concat(Fingerprint));
                       }
                     }
                   });
