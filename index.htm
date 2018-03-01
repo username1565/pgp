@@ -376,11 +376,12 @@
                                         <div class="panel-body">
                                             <textarea class="form-control message" rows="7" id="decryption-decrypted-text" placeholder="Here you'll see the decrypted message." readonly="readonly"></textarea>
                                         </div>
-
+										<form id="Fingerprint">
 										<div class="input-group">
                                             <div class="input-group-addon"><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span></div>
-                                            <input class="form-control" name="sign-passphrase" placeholder="PGP Fingerprint" id="pgp-fingerprint" pattern=".{5,}" title="Enter your private key passphrase" readonly="readonly">
+                                            <input class="form-control" name="sign-passphrase" placeholder="PGP Fingerprint:" id="pgp-fingerprint" pattern=".{5,}" title="Enter your private key passphrase" readonly="readonly">
                                         </div>
+										</form>
                                     </div>
                                 </div>
                              </div>
