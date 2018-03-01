@@ -47,7 +47,7 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#generator" aria-controls="generator" role="tab" data-toggle="tab">Generate a PGP key pair</a></li>
                         <li role="presentation"><a href="#sign" aria-controls="sign" role="tab" data-toggle="tab">Sign</a></li>
-                        <li role="presentation"><a href="#verify" aria-controls="verify" role="tab" data-toggle="tab">Verify</a></li>
+                        <li role="presentation"><a href="#signencrypt" aria-controls="sign" role="tab" data-toggle="tab">Sign+Encrypt</a></li>
                         <li role="presentation"><a href="#encrypt" aria-controls="encrypt" role="tab" data-toggle="tab">Encrypt</a></li>
                         <li role="presentation"><a href="#decrypt" aria-controls="decrypt" role="tab" data-toggle="tab">Decrypt</a></li>
                         <li role="presentation"><a href="#faq" aria-controls="faq" role="tab" data-toggle="tab">FAQ</a></li>
@@ -147,7 +147,7 @@
                                                 </div>
 
                                                 <input value="Generate keys" id="generate_keys_btn" class="btn btn-primary btn-lg btn-block send" name="send" type="submit">
-                                                <a href="https://smartninja-pgp.appspot.com/" id="start_again_btn" class="btn btn-link btn-block hide">Click here to regenerate another pair of key</a>
+                                                <a href="https://thechiefmeat.github.io/pgp" id="start_again_btn" class="btn btn-link btn-block hide">Click here to regenerate another pair of key</a>
                                             </form>
                                         </div>
                                     </div>
@@ -233,6 +233,62 @@
                              </div>
                         </div>
                         <!-- end Sign message -->
+
+                        <!-- Sign+Encrypt message -->
+                        <div role="tabpanel" class="tab-pane" id="signencrypt">
+                             <div class="row generator">
+                                <div class="col-md-5">
+                                    <div class="panel panel-default">
+                                      <div class="panel-heading">
+                                          <h3 class="panel-title">The Public Key</h3>
+                                      </div>
+                                      <div class="panel-body">
+                                          <textarea class="form-control message" id="signencrypt-receivers-public-key" rows="7" placeholder="Paste the public key here."></textarea>
+                                          <br>
+                                      </div>
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">The Private Key</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" id="signencrypt-private-key" rows="7" placeholder="Paste the private key here."></textarea>
+                                            <br>
+
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span></div>
+                                                <input class="form-control" name="sign-passphrase" placeholder="Passphrase for private key" id="signencrypt-passphrase" pattern=".{5,}" title="Enter your private key passphrase" type="password">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                 <div class="col-md-7">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Your message</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" rows="7" id="signencrypt-plain-text" placeholder="Write your message here."></textarea>
+                                        </div>
+                                    </div>
+
+                                     <button class="btn btn-primary" id="signencrypt-button">Sign and encrypt the message</button>
+                                     <br>
+                                     <br>
+
+                                     <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Signed and encrypted message</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" rows="7" id="signencrypt-text" placeholder="Here you'll see the signed and encrypted message." readonly="readonly"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                        <!-- end Sign+Encrypt message -->
+
 
                         <!-- Encrypt message -->
                         <div role="tabpanel" class="tab-pane" id="encrypt">
@@ -322,6 +378,32 @@
                         </div>
                         <!-- end Decrypt message -->
 
+
+                        <!-- GUIDE -->
+                        <div role="tabpanel" class="tab-pane" id="guide">
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+
+
+                              <div class="panel panel-default">
+                                  <div class="panel-heading" role="tab" id="headingOne">
+                                      <h4 class="panel-title">
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        A guide to using PGP
+      </a>
+    </h4>
+                                  </div>
+                                  <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                      <div class="panel-body">
+
+                                      </div>
+                                  </div>
+                              </div>
+
+
+                              </div>
+                              </div>
+                     <!-- END GUIDE -->
                         <!-- FAQ -->
                         <div role="tabpanel" class="tab-pane" id="faq">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -439,7 +521,7 @@ your device.
 
                             <p>
                                 This project is a fork of Heiswayi Nrird's PGP Key Generator. Matej Ramuta forked it
-                                and added message encryption and decryption. TheChiefMeat added sign only mode and support for 8192 RSA keys.
+                                and added message encryption and decryption. TheChiefMeat added sign only mode, sign+encrypt mode as well as support for 8192 RSA keys.
                             </p>
 
                             <p>
