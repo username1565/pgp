@@ -4,6 +4,8 @@ A simple and easy to use PGP system
 
 **URL:** https://thechiefmeat.github.io/pgp/
 
+**Offline Version:** https://github.com/TheChiefMeat/pgp/releases/download/1.3.1/pgp-gh-pages.zip
+
 ## About this program
 
 Pretty Good Privacy (PGP) is a data encryption and decryption computer program that provides cryptographic privacy and 
