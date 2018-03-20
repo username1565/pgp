@@ -21,8 +21,18 @@ var genKeyPair = function () {
 	var comments = ($('#comments').val() != "" ) ? " (" + $('#comments').val() + ")" : "";
 	var bitlength = parseInt($('#bitlength').val());
 	var algorithm = $('#algorithm').val();
-	var expire = ($('#expire').val() == null) ? 0 : $('#expire').val();
+	var expire = $('#expire').val();
 	var passphrase = $('#passphrase').val();
+
+	if (expire == "1") {
+		var expire = 86400 * 365 * 1;
+	} else if (expire == "2") {
+		var expire = 86400 * 365 * 2;
+	} else if (expire == "4") {
+		var expire = 86400 * 365 * 4;
+	} else if (expire == "8") {
+		var expire = 86400 * 365 * 8;
+	}
 
 	// Set ECC flag
 	var use_ecc = false;
@@ -89,18 +99,18 @@ var genKeyPair = function () {
 		primary: {
 			nbits: bitlength,
 			flags: F.certify_keys | F.sign_data | F.auth | F.encrypt_comm | F.encrypt_storage,
-			expire_in: 0 // never expires
+			expire_in: expire // never expires
 		},
 		subkeys: [
 		{
 			nbits: subkey_bitlength,
 			flags: F.sign_data,
-			expire_in: 86400 * 365 * 8
+			expire_in: expire
 		}, {
 			nbits: subkey_bitlength,
 			flags: F.encrypt_comm | F.encrypt_storage,
-			expire_in: 86400 * 365 * 8
-		}
+			expire_in: expire
+		},
 		]
 	};
 
