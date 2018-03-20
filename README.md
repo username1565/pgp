@@ -2,7 +2,7 @@
 
 A simple and easy to use PGP system
 
-**URL:** https://thechiefmeat.github.io/pgp/
+**URL:** https://thechiefmeat.com/pgp/
 
 **Offline Version:** https://github.com/TheChiefMeat/pgp/releases/latest
 
