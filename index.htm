@@ -22,6 +22,31 @@
     <script type="text/javascript" src="index_files/kbpgp.js"></script>
     <script type="text/javascript" src="index_files/FileSaver.js"></script>
     <script type="text/javascript" src="index_files/pgpkeygen.js"></script>
+
+    <script>
+		//enter keys by select file, containing PGP keys as text.
+      var openFile = function(event, id) {
+        var input = event.target;
+
+        var reader = new FileReader();
+        reader.onload = function(){
+          var text = reader.result;
+          var node = document.getElementById(id);
+          node.innerText = text;
+          //console.log(reader.result.substring(0, 200));
+        };
+        reader.readAsText(input.files[0]);
+      };
+    </script>
+	
+<script type='text/javascript'>
+//function to download textarea
+function doDL(s){
+    function dataUrl(data) {return "data:x-application/text," + escape(data);}
+	window.open(dataUrl(s));
+}
+</script>
+	
     <!--[if IE 9]>
 		<script type="text/javascript" src="/assets/js/placeholder.js"></script>
 	<![endif]-->
@@ -33,8 +58,20 @@
 </style></head>
 
 <body>
-
-    <div class="container">
+	<!--status notification-->
+    <div class="hidden">
+        <div class="alert alert-success fade in" id="vrSuccess">
+            <button aria-hidden="true" class="close" data-dismiss="alert" type="button">&times;</button><span id="vrAddrLabel"></span>
+        </div>
+        <div class="alert alert-danger fade in" id="vrError">
+            <button aria-hidden="true" class="close" data-dismiss="alert" type="button">&times;</button><span id="vrAddrLabel"></span>
+        </div>
+        <div class="alert alert-warning fade in" id="vrWarning">
+            <button aria-hidden="true" class="close" data-dismiss="alert" type="button">&times;</button><span id="vrAddrLabel"></span>
+        </div>
+    </div>
+    
+	<div class="container">
         <div class="row content">
             <div class="col-md-12">
 
@@ -49,9 +86,9 @@
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#generator" aria-controls="generator" role="tab" data-toggle="tab">Generate a PGP key pair</a></li>
                         <li role="presentation"><a href="#sign" aria-controls="sign" role="tab" data-toggle="tab">Sign</a></li>
-                        <li role="presentation"><a href="#signencrypt" aria-controls="sign" role="tab" data-toggle="tab">Sign+Encrypt</a></li>
-                        <li role="presentation"><a href="#encrypt" aria-controls="encrypt" role="tab" data-toggle="tab">Encrypt</a></li>
-                        <li role="presentation"><a href="#decrypt" aria-controls="decrypt" role="tab" data-toggle="tab">Decrypt</a></li>
+                        <li role="presentation"><a href="#verify" aria-controls="verify" role="tab" data-toggle="tab">Verify signature</a></li>
+                        <li role="presentation"><a href="#signencrypt" aria-controls="sign" role="tab" data-toggle="tab">(Sign+)Encrypt</a></li>
+                        <li role="presentation"><a href="#decrypt" aria-controls="decrypt" role="tab" data-toggle="tab">Decrypt(+verify)</a></li>
                         <li role="presentation"><a href="#faq" aria-controls="faq" role="tab" data-toggle="tab">FAQ</a></li>
                         <li role="presentation"><a href="#about" aria-controls="about" role="tab" data-toggle="tab">About</a></li>
                     </ul>
@@ -166,7 +203,7 @@
                                         </div>
                                         <div class="panel-body">
                                             <textarea class="form-control message" rows="7" name="pubkey" placeholder="Your public key will be generated here." id="pubkey" readonly="readonly"></textarea>
-                                            <span id="helpBlock" class="help-block"><a href="#download_pub_key" class="btn btn-danger download disabled" title="This button will be enabled after you generate your key pair." name="download_pub_key" id="download_pub_key"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Download public key (.ASC file)</a> <a href="#" class="btn btn-link" data-toggle="popover" title="" data-content="You can put this key on your website or at the bottom signature of your email messages. Anyone wishing to contact you in private will have your public PGP key to send you encrypted messages." data-original-title="Public key">Learn More</a>
+                                            <span id="helpBlock" class="help-block"><a href="#download_pub_key" class="btn btn-danger download disabled" title="This button will be enabled after you generate your key pair." name="download_pub_key" id="download_pub_key"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Download public key (.ASC file)</a> <a href="#" class="btn btn-link" data-toggle="popover" title="" data-content="You can put this key on your website or at the bottom signature of your email messages. Anyone wishing to contact you in private will have your public PGP key to send you encrypted messages. This file contain the key in text format and can be opened as text." data-original-title="Public key">Learn More</a>
                                             </span>
                                         </div>
                                     </div>
@@ -177,7 +214,7 @@
                                         </div>
                                         <div class="panel-body">
                                             <textarea class="form-control message" rows="7" name="privkey" placeholder="Your private key will be generated here." id="privkey" readonly="readonly"></textarea>
-                                            <span id="helpBlock" class="help-block"><a href="#download_priv_key" class="btn btn-danger download disabled" title="This button will be enabled after you generate your key pair." name="download_priv_key" id="download_priv_key"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Download private key (.ASC file)</a> <a href="#" class="btn btn-link" data-toggle="popover" title="" data-content="Save your private PGP key in a file on your computer and keep it as confidential as possible. You will need it to decrypt PGP messages sent to you using your public PGP key." data-original-title="Private key">Learn More</a>
+                                            <span id="helpBlock" class="help-block"><a href="#download_priv_key" class="btn btn-danger download disabled" title="This button will be enabled after you generate your key pair." name="download_priv_key" id="download_priv_key"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Download private key (.ASC file)</a> <a href="#" class="btn btn-link" data-toggle="popover" title="" data-content="Save your private PGP key in a file on your computer and keep it as confidential as possible. You will need it to decrypt PGP messages sent to you using your public PGP key. This file contain the key in text format and can be opened as text." data-original-title="Private key">Learn More</a>
                                             </span>
                                         </div>
                                     </div>
@@ -197,8 +234,9 @@
                                             <h3 class="panel-title">Your Private Key</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" id="sign-private-key" rows="7" placeholder="Paste your private key here."></textarea>
-                                            <br>
+                                            <textarea class="form-control message" id="sign-private-key" rows="7" placeholder="Paste your private key here. ECC or RSA keys working both." title="ECC and RSA algorithms working both for sign and verify. You can use ECC keys here."></textarea>
+                                            <input type='file' onchange='openFile(event, "sign-private-key")'>
+											<br>
 
                                             <div class="input-group">
                                                 <div class="input-group-addon"><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span></div>
@@ -216,7 +254,8 @@
                                         </div>
                                         <div class="panel-body">
                                             <textarea class="form-control message" rows="7" id="sign-plain-text" placeholder="Write your message here."></textarea>
-                                        </div>
+											<input type='file' onchange='openFile(event, "sign-plain-text")'><br>
+										</div>
                                     </div>
 
                                      <button class="btn btn-primary" id="sign-button">Sign the message</button>
@@ -229,33 +268,82 @@
                                         </div>
                                         <div class="panel-body">
                                             <textarea class="form-control message" rows="7" id="signed-text" placeholder="Here you'll see the signed message." readonly="readonly"></textarea>
-                                        </div>
+											<input value='download' type='button' onclick='doDL(document.getElementById("signed-text").value)' />
+										</div>
                                     </div>
                                 </div>
                              </div>
                         </div>
                         <!-- end Sign message -->
 
-                        <!-- Sign+Encrypt message -->
-                        <div role="tabpanel" class="tab-pane" id="signencrypt">
+						<!-- Verify message -->
+						<div role="tabpanel" class="tab-pane" id="verify">
                              <div class="row generator">
                                 <div class="col-md-5">
                                     <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Signer's Public Key</h3>
+                                        </div>
+                                        <div class="panel-body" title="Sign by private key, verify by public key. ECC keys working too.">
+                                            <textarea class="form-control message" id="Signer-public-key" rows="7" placeholder="Paste receiver&#39;s public key here."></textarea>
+                                        <input type='file' onchange='openFile(event, "Signer-public-key")'><br>
+										</div>
+                                    </div>
+                                </div>
+
+                                 <div class="col-md-7">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Your message</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <textarea class="form-control message" rows="7" id="Unverified-plain-text" placeholder="Write your message here."></textarea>
+                                        <input type='file' onchange='openFile(event, "Unverified-plain-text")'><br>
+										</div>
+                                    </div>
+
+                                     <button class="btn btn-primary" id="verify-signature" title="Message -> to hash, then verify fingerprint from signed hash.">Verify signature</button>
+                                     <br>
+                                     <br>
+
+                                     <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Pure message and status</h3>
+                                        </div>
+										<div id="vrAlert"></div>
+                                        <div class="panel-body">
+											<textarea class="form-control message" rows="7" id="pure-text" placeholder="Here you&#39;ll see pure message, if signature will be verified." readonly=""></textarea>
+											<input value='download' type='button' onclick='doDL(document.getElementById("pure-text").value)' />
+										</div>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                        <!-- end Verify message -->
+						
+                        <!-- Sign+Encrypt message -->
+                        <div role="tabpanel" class="tab-pane" id="signencrypt">
+                             <div class="row generator">
+							 <h4><center>Only pub for simply encryption, priv+pub for sign+encrypt.</center></h4><br>
+                                <div class="col-md-5">
+                                    <div class="panel panel-default">
                                       <div class="panel-heading">
-                                          <h3 class="panel-title">The Public Key</h3>
+                                          <h3 class="panel-title">Reseiver's Public Key</h3>
                                       </div>
                                       <div class="panel-body">
-                                          <textarea class="form-control message" id="signencrypt-receivers-public-key" rows="7" placeholder="Paste the public key here."></textarea>
-                                          <br>
+                                          <textarea class="form-control message" id="signencrypt-receivers-public-key" rows="7" placeholder="Paste the public key here. RSA only." title="Need for encryption. Only RSA. ECC encryption not working now..."></textarea>
+                                          <input type='file' onchange='openFile(event, "signencrypt-receivers-public-key")'><br>
+										  <br>
                                       </div>
 									  </div>
 									  <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h3 class="panel-title">The Private Key</h3>
+                                            <h3 class="panel-title">Signer's Private Key (signing)</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" id="signencrypt-private-key" rows="7" placeholder="Paste the private key here."></textarea>
-                                            <br>
+                                            <textarea class="form-control message" id="signencrypt-private-key" rows="7" placeholder="Paste the private key here. This can be ECC key." title="If private key not specified will be encryption without signature."></textarea>
+                                            <input type='file' onchange='openFile(event, "signencrypt-private-key")'><br>
+											<br>
 
                                             <div class="input-group">
                                                 <div class="input-group-addon"><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span></div>
@@ -273,10 +361,11 @@
                                         </div>
                                         <div class="panel-body">
                                             <textarea class="form-control message" rows="7" id="signencrypt-plain-text" placeholder="Write your message here."></textarea>
-                                        </div>
+                                        <input type='file' onchange='openFile(event, "signencrypt-plain-text")'><br>
+										</div>
                                     </div>
 
-                                     <button class="btn btn-primary" id="signencrypt-button">Sign and encrypt the message</button>
+                                     <button class="btn btn-primary" id="signencrypt-button" title="If private key not specified - just encryption by public key.">(Sign and) Encrypt the message</button>
                                      <br>
                                      <br>
 
@@ -284,68 +373,31 @@
                                         <div class="panel-heading">
                                             <h3 class="panel-title">Signed and encrypted message</h3>
                                         </div>
+										<div id="vrAlert3"></div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" rows="7" id="signencrypt-text" placeholder="Here you'll see the signed and encrypted message." readonly="readonly"></textarea>
-                                        </div>
+                                            <textarea class="form-control message" style="display: none;" rows="7" id="encrypted-text" placeholder="this is hidden textarea to copy from here an encrypted text" readonly="readonly"></textarea>
+											<textarea class="form-control message" rows="7" id="signencrypt-text" placeholder="Here you'll see the signed and encrypted message." readonly="readonly"></textarea>
+											<input value='download' type='button' onclick='doDL(document.getElementById("signencrypt-text").value)' />
+										</div>
                                     </div>
                                 </div>
                              </div>
                         </div>
                         <!-- end Sign+Encrypt message -->
 
-
-                        <!-- Encrypt message -->
-                        <div role="tabpanel" class="tab-pane" id="encrypt">
-                             <div class="row generator">
-                                <div class="col-md-5">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">Receiver's Public Key</h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            <textarea class="form-control message" id="encryption-receivers-public-key" rows="7" placeholder="Paste receiver's public key here."></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                 <div class="col-md-7">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">Your message</h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            <textarea class="form-control message" rows="7" id="encryption-plain-text" placeholder="Write your message here."></textarea>
-                                        </div>
-                                    </div>
-
-                                     <button class="btn btn-primary" id="encryption-button">Encrypt the message</button>
-                                     <br>
-                                     <br>
-
-                                     <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">Encrypted message</h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            <textarea class="form-control message" rows="7" id="encryption-encrypted-text" placeholder="Here you'll see the encrypted message." readonly="readonly"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                             </div>
-                        </div>
-                        <!-- end Encrypt message -->
-
-                        <!-- Decrypt message -->
+                        <!-- Decrypt message (and verify signature, if signed)-->
                         <div role="tabpanel" class="tab-pane" id="decrypt">
+							<h4><center>Only priv for simply decryption, priv+pub for decrypt & signature.</center></h4><br>
                               <div class="row generator">
                                 <div class="col-md-5">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h3 class="panel-title">Your Private Key</h3>
+                                            <h3 class="panel-title">Receiver's Private Key (decryption)</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" id="decryption-private-key" rows="7" placeholder="Paste your private key here."></textarea>
-                                            <br>
+                                            <textarea class="form-control message" id="decryption-private-key" rows="7" placeholder="Paste private key here to do decryption by this. RSA key only."></textarea>
+                                            <input type='file' onchange='openFile(event, "decription-private-key")'><br>
+											<br>
 
                                             <div class="input-group">
                                                 <div class="input-group-addon"><span class="glyphicon glyphicon-text-background" aria-hidden="true"></span></div>
@@ -353,6 +405,16 @@
                                             </div>
                                         </div>
                                     </div>
+									<div class="panel panel-default">
+                                      <div class="panel-heading">
+                                          <h3 class="panel-title">Signer's Public Key</h3>
+                                      </div>
+                                      <div class="panel-body">
+                                          <textarea class="form-control message" id="signer_public_key" rows="7" placeholder="Paste the signer's public key here, if message have signature. This can be ECC key." title="Or leave this field empty, if message is without signature."></textarea>
+                                          <input type='file' onchange='openFile(event, "signer_public_key")'><br>
+										  <br>
+                                      </div>
+									  </div>
                                 </div>
 
                                  <div class="col-md-7">
@@ -361,11 +423,18 @@
                                             <h3 class="panel-title">Encrypted message</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" rows="7" id="decryption-encrypted-text" placeholder="Enter the encrypted message here."></textarea>
+                                            <textarea class="form-control message" rows="7" id="decryption-encrypted-text" placeholder="Enter the encrypted message here."
+title="Here can be signed but not encrypted message,
+if private key, corresponing with PUBLIC - specified.
+But will be better to use 'virify'-tab to check signature."></textarea>
+<input type='file' onchange='openFile(event, "decryption-encrypted-text")'><br>
                                         </div>
                                     </div>
 
-                                     <button class="btn btn-warning" id="decryption-button">Decrypt the message</button>
+<!--Here you can see the multistring commentary-->
+									<button class="btn btn-warning" id="decryption-button" title="If private key not specified, or if message don't have signature,
+this will not be verified successfully.">Decrypt the message (and verify signature)</button>
+
                                      <br>
                                      <br>
 
@@ -374,8 +443,10 @@
                                             <h3 class="panel-title">Decrypted message</h3>
                                         </div>
                                         <div class="panel-body">
+											<div id="vrAlert2"></div>
                                             <textarea class="form-control message" rows="7" id="decryption-decrypted-text" placeholder="Here you'll see the decrypted message." readonly="readonly"></textarea>
-                                        </div>
+											<input value='download' type='button' onclick='doDL(document.getElementById("decryption-decrypted-text").value)' />
+											</div>
                                     </div>
                                 </div>
                              </div>
