@@ -151,17 +151,12 @@ $(document).ready(function() {
                       }
                       else{
 						clone = $('#vrError').clone();
-						clone.find('#vrAddrLabel').html("Incorrect password for private key");
+						clone.find('#vrAddrLabel').html("Signing error: Incorrect password for private key.");
 						clone.appendTo($('#vrAlert3'));
                       }
                   });
               }
           }
-		  else{
-			clone = $('#vrWarning').clone();
-			clone.find('#vrAddrLabel').html("Private key for signing not loaded. Encryption without sign, by pub.");
-			clone.appendTo($('#vrAlert3'));			
-		  }
           // import receiver's public key
           var receiver = kbpgp.KeyManager.import_from_armored_pgp({
               armored: signencryptReceiversPublicKey.val()
@@ -179,10 +174,22 @@ $(document).ready(function() {
                   kbpgp.box(params, function(err, result_string, result_buffer) {
                       console.log(err, result_string, result_buffer);
                       signencryptText.val(result_string);
+					  
+						if(currUser===null){
+							clone = $('#vrWarning').clone();
+							clone.find('#vrAddrLabel').html("Message successfully encrypted, but not signed. Private key not loaded.");
+						}else{
+							clone = $('#vrSuccess').clone();
+							clone.find('#vrAddrLabel').html("Message successfully encrypted and signed.");
+						}
+						clone.appendTo($('#vrAlert3'));
                   });
               } else {
-                  console.log("Error!");
-              }
+					console.log("Error!");
+					clone = $('#vrError').clone();
+					clone.find('#vrAddrLabel').html("Encryption error. Incorrect public key.");
+					clone.appendTo($('#vrAlert3'));
+			  }
           });
       });
   });
