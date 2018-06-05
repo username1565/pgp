@@ -58,8 +58,74 @@ $(document).ready(function() {
           }
         });
   });
+  //end Sign
 
-  // SIGN+Encrypt
+  // Verify signature
+    var VerifyButton = $("#verify-signature");
+
+    VerifyButton.click(function(){
+        var UnverifiedPlainText = $("#Unverified-plain-text");
+        var PureText = $("#pure-text");
+        var SignerPublicKey = $("#Signer-public-key");
+		
+		$('#vrAlert').empty();
+		var clone = $('#vrError').clone();
+		
+        // import receiver's public key
+        var receiver = kbpgp.KeyManager.import_from_armored_pgp({
+          armored: SignerPublicKey.val()
+        }, function(err, receiver) {
+          if (!err) {
+            console.log("receiver's public key is loaded");
+			
+            // encrypt the message
+            var params = {
+              msg: UnverifiedPlainText.val(),
+              encrypt_for: receiver
+            };
+                  var ring = new kbpgp.keyring.KeyRing;
+                  ring.add_key_manager(receiver);
+				  
+				  kbpgp.unbox({keyfetch: ring, armored: UnverifiedPlainText.val()}, function(err, literals) {
+                    if (err != null) {
+						//here is error if message was been encrypted by RSA public key,
+						//but signed by ECC private key.
+						clone.find('#vrAddrLabel').html("Message failed to verify! "+err);
+                      return console.log("Problem: " + err);
+                    } else {
+                      var text = literals[0].toString();
+                      console.log("decrypted message: " + text);
+
+                      PureText.val(text);
+					  
+                      var ds = km = null;
+                      ds = literals[0].get_data_signer();
+                      if (ds) { km = ds.get_key_manager(); }
+                      if (km) {
+                        console.log("Signed by PGP fingerprint");
+                        var pub_f = receiver.get_pgp_fingerprint().toString('hex');
+						var text_f = km.get_pgp_fingerprint().toString('hex');
+						console.log(text_f, (pub_f===text_f) ? 'and verified.' : 'and failed to verify.');
+						//console.log('fingerprint of public key from private:\n'+pub_f);
+
+						//-> switch alert message
+						clone = (pub_f === text_f) ? $('#vrSuccess').clone() : $('#vrWarning').clone();
+						clone.find('#vrAddrLabel').html("Message signature is verified with fingerprint "+pub_f);
+                      }
+						clone.appendTo($('#vrAlert')); //display alert message
+                    }
+                  });
+
+          } else {
+            console.log("Error!");
+			clone.find('#vrAddrLabel').html("Message failed to verify!");
+			clone.appendTo($('#vrAlert'));
+          }
+        });
+    });
+	//end Verify signature
+
+	// SIGN+Encrypt
   var signencryptButton = $("#signencrypt-button");
 
   signencryptButton.click(function() {
@@ -68,6 +134,9 @@ $(document).ready(function() {
       var signencryptPrivateKey = $("#signencrypt-private-key");
       var signencryptPassphrase = $("#signencrypt-passphrase");
       var signencryptReceiversPublicKey = $("#signencrypt-receivers-public-key");
+
+      $('#vrAlert3').empty();
+      var clone = $('#vrError').clone();
 
       var currUser = kbpgp.KeyManager.import_from_armored_pgp({
           armored: signencryptPrivateKey.val()
@@ -79,6 +148,11 @@ $(document).ready(function() {
                   }, function(err) {
                       if (!err) {
                           console.log("Loaded private key with passphrase");
+                      }
+                      else{
+						clone = $('#vrError').clone();
+						clone.find('#vrAddrLabel').html("Signing error: Incorrect password for private key.");
+						clone.appendTo($('#vrAlert3'));
                       }
                   });
               }
@@ -100,50 +174,28 @@ $(document).ready(function() {
                   kbpgp.box(params, function(err, result_string, result_buffer) {
                       console.log(err, result_string, result_buffer);
                       signencryptText.val(result_string);
+					  
+						if(currUser===null){
+							clone = $('#vrWarning').clone();
+							clone.find('#vrAddrLabel').html("Message successfully encrypted, but not signed. Private key not loaded.");
+						}else{
+							clone = $('#vrSuccess').clone();
+							clone.find('#vrAddrLabel').html("Message successfully encrypted and signed.");
+						}
+						clone.appendTo($('#vrAlert3'));
                   });
               } else {
-                  console.log("Error!");
-              }
+					console.log("Error!");
+					clone = $('#vrError').clone();
+					clone.find('#vrAddrLabel').html("Encryption error. Incorrect public key.");
+					clone.appendTo($('#vrAlert3'));
+			  }
           });
       });
   });
+	//end SIGN+ENCRYPT
 
-    /* New code by Matej Ramuta */
-
-    // ENCRYPTION
-    var encryptionButton = $("#encryption-button");
-
-    encryptionButton.click(function(){
-        var encryptionPlainText = $("#encryption-plain-text");
-        var encryptionEncryptedText = $("#encryption-encrypted-text");
-        var encryptionReceiversPublicKey = $("#encryption-receivers-public-key");
-
-        // import receiver's public key
-        var receiver = kbpgp.KeyManager.import_from_armored_pgp({
-          armored: encryptionReceiversPublicKey.val()
-        }, function(err, receiver) {
-          if (!err) {
-            console.log("receiver's public key is loaded");
-            console.log(receiver);
-
-            // encrypt the message
-            var params = {
-              msg: encryptionPlainText.val(),
-              encrypt_for: receiver
-            };
-
-            kbpgp.box(params, function(err, result_string, result_buffer) {
-              console.log(err, result_string, result_buffer);
-              encryptionEncryptedText.val(result_string);
-            });
-
-          } else {
-            console.log("Error!");
-          }
-        });
-    });
-
-    // DECRYPTION
+    // DECRYPTION(+VERIFY)
     var decryptionButton = $("#decryption-button");
 
     decryptionButton.click(function(){
@@ -151,10 +203,15 @@ $(document).ready(function() {
         var decryptionDecryptedText = $("#decryption-decrypted-text");
         var decryptionPrivateKey = $("#decryption-private-key");
         var decryptionPassphrase = $("#decryption-passphrase");
+        var PubSigVerify = $("#signer_public_key");
 
-        console.log(decryptionEncryptedText);
+        
+		//console.log(decryptionEncryptedText);
 
-        // import receiver's public key
+        $('#vrAlert2').empty();
+		var clone = $('#vrError').clone();
+		
+		// import receiver's public key
         var currUser = kbpgp.KeyManager.import_from_armored_pgp({
           armored: decryptionPrivateKey.val()
         }, function(err, currUser) {
@@ -169,36 +226,117 @@ $(document).ready(function() {
                   // add KeyRing
                   var ring = new kbpgp.keyring.KeyRing;
                   ring.add_key_manager(currUser);
+					var senderPUB = kbpgp.KeyManager.import_from_armored_pgp
+					(
+						{armored: PubSigVerify.val()},
+						function(err, senderPUB)
+						{
+							if (!err) {
+								console.log("Sender's public key is loaded");
+								ring.add_key_manager(senderPUB);
+								console.log(ring);
+								kbpgp.unbox({keyfetch: ring, armored: decryptionEncryptedText.val()}, function(err, literals)
+								{
+									if (err != null) {
+										clone.find('#vrAddrLabel').html("Message failed to verify! <br>"+ err);
+										clone.appendTo($('#vrAlert2'));
+										console.log(err);
+									} else
+									{
+										var decryptedText = literals[0].toString();
+										console.log("decrypted message: " + decryptedText);
 
-                  kbpgp.unbox({keyfetch: ring, armored: decryptionEncryptedText.val()}, function(err, literals) {
-                    if (err != null) {
-                      return console.log("Problem: " + err);
-                    } else {
-                      var decryptedText = literals[0].toString();
-                      console.log("decrypted message: " + decryptedText);
+										decryptionDecryptedText.val(decryptedText);
 
-                      decryptionDecryptedText.val(decryptedText);
+										var ds = km = null;
+										ds = literals[0].get_data_signer();
+										if (ds) { km = ds.get_key_manager(); }
+										if (km) {
+											console.log("Signed by PGP fingerprint");
+											var pub_f = senderPUB.get_pgp_fingerprint().toString('hex');
+											var text_f = km.get_pgp_fingerprint().toString('hex');
+											console.log(text_f, (pub_f===text_f) ? 'and verified.' : 'and failed to verify.');
 
-                      var ds = km = null;
-                      ds = literals[0].get_data_signer();
-                      if (ds) { km = ds.get_key_manager(); }
-                      if (km) {
-                        console.log("Signed by PGP fingerprint");
-                        console.log(km.get_pgp_fingerprint().toString('hex'));
-                      }
-                    }
-                  });
+											//-> switch alert message
+											if(pub_f === text_f){
+												clone = $('#vrSuccess').clone();
+												clone.find('#vrAddrLabel').html("Message is decrypted by priv, and signature is verified successfully by pub - with fingerprint "+pub_f);
+											}
+											else{
+												clone = $('#vrWarning').clone();
+												clone.find('#vrAddrLabel').html("Incorrect fingerprint "+pub_f);
+											}
+						
+										}else{
+											clone = $('#vrWarning').clone();
+											clone.find('#vrAddrLabel').html('Decrypted, but incorrect fingerprint - signature not verified.<br>If this message encrypted without signature - ignore this message.');
+										}
+										clone.appendTo($('#vrAlert2')); //display alert message
+									}
+								});
+							}
+							else{
+								kbpgp.unbox({keyfetch: ring, armored: decryptionEncryptedText.val()}, function(err, literals)
+								{
+									if (err != null) {
+										clone.find('#vrAddrLabel').html("Message failed to verify! <br>"+ err);
+										clone.appendTo($('#vrAlert2'));
+										console.log(err);
+									} else
+									{
+										var decryptedText = literals[0].toString();
+										console.log("decrypted message: " + decryptedText);
 
+										decryptionDecryptedText.val(decryptedText);
+
+										var ds = km = null;
+										ds = literals[0].get_data_signer();
+										if (ds) { km = ds.get_key_manager(); }
+										if (km) {
+											console.log("Signed by PGP fingerprint");
+											var pub_f = senderPUB.get_pgp_fingerprint().toString('hex');
+											var text_f = km.get_pgp_fingerprint().toString('hex');
+											console.log(text_f, (pub_f===text_f) ? 'and verified.' : 'and failed to verify.');
+											
+											//-> switch alert message
+											if(pub_f === text_f){
+												clone = $('#vrSuccess').clone();
+												clone.find('#vrAddrLabel').html("Message is decrypted by priv, and signature is verified successfully by pub - with fingerprint "+pub_f);
+											}
+											else{
+												clone = $('#vrWarning').clone();
+												clone.find('#vrAddrLabel').html("Incorrect fingerprint "+pub_f);
+											}
+						
+										}else{
+											clone = $('#vrWarning').clone();
+											clone.find('#vrAddrLabel').html('Decrypted, but incorrect fingerprint - signature not verified.<br>If this message encrypted without signature - ignore this message.');
+										}
+										clone.appendTo($('#vrAlert2')); //display alert message
+									}
+								});
+							}
+						}
+					);
                 } else {
                   console.log("Error in decryption unlock pgp");
+				  clone = $('#vrWarning').clone();
+				  clone.find('#vrAddrLabel').html('Incorrect password for private key');
+				  clone.appendTo($('#vrAlert2'));
                 }
               });
             } else {
               console.log("Loaded private key w/o passphrase");
+			  clone.find('#vrAddrLabel').html("Invalid private key or password.");
+			  clone.appendTo($('#vrAlert2'));
             }
           } else {
             console.log("Error in decryption import");
+			clone.find('#vrAddrLabel').html("Error in decryption import");
+			clone.appendTo($('#vrAlert2'));
           }
+
         });
     });
+	//END Decryption(+Verify)
 });
