@@ -1,4 +1,4 @@
-# PGP Key Generator
+# PGP Key Suite
 
 A simple and easy to use PGP system
 

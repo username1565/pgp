@@ -52,7 +52,7 @@
             <div class="col-md-12">
 
                 <div class="page-header">
-                    <h1 class="title">PGP Key Generator</h1>
+                    <h1 class="title">PGP Suite</h1>
                     A simple and easy to use client-side PGP system
                 </div>
 
@@ -60,11 +60,11 @@
 
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#generator" aria-controls="generator" role="tab" data-toggle="tab">Generate a PGP key pair</a></li>
+                        <li role="presentation" class="active"><a href="#generator" aria-controls="generator" role="tab" data-toggle="tab">Generate PGP Key</a></li>
                         <li role="presentation"><a href="#sign" aria-controls="sign" role="tab" data-toggle="tab">Sign</a></li>
-                        <li role="presentation"><a href="#verify" aria-controls="verify" role="tab" data-toggle="tab">Verify signature</a></li>
+                        <li role="presentation"><a href="#verify" aria-controls="verify" role="tab" data-toggle="tab">Verify</a></li>
                         <li role="presentation"><a href="#signencrypt" aria-controls="sign" role="tab" data-toggle="tab">(Sign+)Encrypt</a></li>
-                        <li role="presentation"><a href="#decrypt" aria-controls="decrypt" role="tab" data-toggle="tab">Decrypt(+verify)</a></li>
+                        <li role="presentation"><a href="#decrypt" aria-controls="decrypt" role="tab" data-toggle="tab">Decrypt(+Verify)</a></li>
                         <li role="presentation"><a href="#faq" aria-controls="faq" role="tab" data-toggle="tab">FAQ</a></li>
                         <li role="presentation"><a href="#about" aria-controls="about" role="tab" data-toggle="tab">About</a></li>
                     <!--
@@ -213,7 +213,7 @@
                                             <h3 class="panel-title">Your Private Key</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" id="sign-private-key" rows="7" placeholder="Paste your private key here. ECC or RSA keys working both." title="ECC and RSA algorithms working both for sign and verify. You can use ECC keys here."></textarea>
+                                            <textarea class="form-control message" id="sign-private-key" rows="7" placeholder="Paste your private key here (ECC or RSA keys)." title="ECC and RSA algorithms working both for sign and verify. You can use ECC keys here."></textarea>
                                             <input type='file' onchange='openFile(event, "sign-private-key")'>
                                             <br>
 
@@ -289,11 +289,11 @@
 
                                      <div class="panel panel-default">
                                         <div class="panel-heading">
-                                            <h3 class="panel-title">Pure message and status</h3>
+                                            <h3 class="panel-title">Raw message and status</h3>
                                         </div>
                                         <div id="vrAlert"></div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" rows="7" id="pure-text" placeholder="Here you&#39;ll see pure message, if signature will be verified." readonly=""></textarea>
+                                            <textarea class="form-control message" rows="7" id="pure-text" placeholder="Here you'll see the raw message, if signed it will be verified." readonly=""></textarea>
                                             <br>
                                             <a id="download-pure-text" style="display:none;" href="javascript:void(0);" title="Download pure text"
                                             onclick="linkText('pure-text', 'download-pure-text', 'pure_text.txt');
@@ -382,7 +382,7 @@
                                             <h3 class="panel-title">Receiver's Private Key (decryption)</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <textarea class="form-control message" id="decryption-private-key" rows="7" placeholder="Paste private key here to do decryption by this. RSA key only."></textarea>
+                                            <textarea class="form-control message" id="decryption-private-key" rows="7" placeholder="Paste the private key here to decrypt. RSA key only."></textarea>
                                             <input type='file' onchange='openFile(event, "decryption-private-key")'><br>
                                             <br>
 
@@ -397,7 +397,7 @@
                                           <h3 class="panel-title">Signer's Public Key</h3>
                                       </div>
                                       <div class="panel-body">
-                                          <textarea class="form-control message" id="signer_public_key" rows="7" placeholder="Paste the signer's public key here, if message have signature. This can be ECC key." title="Or leave this field empty, if message is without signature."></textarea>
+                                          <textarea class="form-control message" id="signer_public_key" rows="7" placeholder="Paste the signer's public key here if the message is signed. This can be ECC key." title="Or leave this field empty, if message is without signature."></textarea>
                                           <input type='file' onchange='openFile(event, "signer_public_key")'><br>
                                           <br>
                                       </div>
