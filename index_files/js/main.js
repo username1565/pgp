@@ -156,17 +156,15 @@ function updateLink(input, link, as_binary, action) { //
 			: filename_temp.split('.encrypted_and_signed.txt', 1)[0];
 	}
 	
-	var filename_notify = 'Filename is: '+link.getAttribute("download")+'\n'+
-		'To change filename, load file again and re-sign the message,\n'+
-		'or try to load another file, then do cansel loading this.';
-		
+	var filename_notify = 'Filename is: '+link.getAttribute("download");
+
 	if(as_binary===undefined){
-		link.setAttribute('title', 'Download '+suffix+' message as text. \n\n'+
+		link.setAttribute('title', 'Download '+suffix+' message as text. \n'+
 		filename_notify
 		);
 	}else{
 		link.setAttribute('title', 'Download '+suffix+' message as binary. \n'+
-		'If in textarea base64 encoded file content - you can download this as binary RAW-data.\n\n'+
+		'If in textarea base64 encoded file content - you can download this as binary RAW-data.\n'+
 		filename_notify
 		);
 	}
